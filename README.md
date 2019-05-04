@@ -16,22 +16,27 @@ Indexer должен иметь возможность сохранять ста
  
 Например, 
 Файл “Example.txt” содержит текст “Minsk is the capital and largest city of Belarus. The population in January 2018 was 1982444.” 
+
 Sent#0: “Minsk is the capital and largest city of Belarus.” 
+
 Sent#1: “The population in January 2018 was 1982444.” 
+
 Word: “Minsk”: {“Example.txt”, (Sent#0, offset = 0)} 
+
 Word: “is”: {“Example.txt”, (Sent#0, offset = 6)} 
+
 Word: “the”: {“Example.txt”, ((Sent#0, offset = 9), (Sent#1, offset = 0))} 
-… 
- 
+
 Требования к Searcher 
  
 Searcher должен обеспечивать эффективный поиск статистики по слову. 
  
 Например, 
 Для запроса “Minsk” (смотри выше) результат должен быть такой:  
-- 	“Minsk”:  
+-  	“Minsk”:  
 o	File “Example.txt” 
 ▪	(Sent#0, offset = 0) 
+
 Запрос “the”: 
 o	File “Example.txt” 
 ▪	(Sent#0, offset = 9) 
