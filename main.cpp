@@ -6,12 +6,18 @@
 
 
 /*
-name.exe -i folder -r(?)
-if file has processed , ask for it
-name.exe -i folder -s word -r(nonr -  deafault)
-name.exe folder -s word -r(
-if file has processed, output
-else out "file hasnt't processed", want to process [y/n], if rec wrtie (y -r) ) 
+how to run:
+run programm exe with this flags
+1)index folder
+	-i [folder_path] [-r]
+	-r -recursive searching(none recursiving is setting by default)
+	NOTE: programm asks for printing information indexing folder
+2) search word in indexing folder
+	[folder_path] -s
+	NOTE: you should index file before searching
+3) index and search 
+	-i [folder_path] -s "word" [-r]
+	-r - recursive searching(none recursiving is setting by default)
 */
 
 void Solution(int argc, char* argv[]) {
