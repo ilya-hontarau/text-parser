@@ -44,5 +44,7 @@ private:
 	void PrintWords() const;
 
 	std::string Edit(const std::string& str);
+
+	bool CheckWord(const std::string& word) const;
 };
 

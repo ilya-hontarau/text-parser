@@ -1,6 +1,6 @@
 #include "index.h"
 #include <iostream>
-
+#include <regex>
 bool IsUpper(char ch) {
 	if ((ch >= 'À' && ch <= 'ß') || (ch >= 'A' && ch <= 'Z')) {
 		return true;
@@ -43,7 +43,7 @@ void Indexer::Process() {
 			sentence += word + " ";
 			ProcessWord(Edit(word), { sent_counter, offset_counter });
 			offset_counter = sentence.size();
-			if (*prev(word.end()) == '.' || *prev(word.end()) == '!' || *prev(word.end()) == '?') {
+			if ((*prev(word.end()) == '.' || *prev(word.end()) == '!' || *prev(word.end()) == '?') && CheckWord(word)) {
 				sentences.push_back(sentence.substr(0, sentence.size() - 1));
 				sentence.clear();
 				++sent_counter;
@@ -191,4 +191,19 @@ std::string Indexer::Edit(const std::string & str) {
 			return str.substr(0, str.size() - 1);
 		}
 	return str;
+}
+
+bool Indexer::CheckWord(const std::string& word) const {
+	std::regex alphabets("([A-Za-z])");
+	std::regex prefixes("(Mr|St|Mrs|Ms|Dr)[.]");
+	std::regex suffixes("(Inc|Ltd|Jr|Sr|Co)");
+	std::regex acronyms("([A-Z][.][A-Z][.](?:[A-Z][.])?)");
+	std::regex websites("[.](com|net|org|io|gov|ru|by)");
+	std::vector <std::regex> reg_exp{ alphabets ,prefixes,suffixes,acronyms,websites };
+	for (const auto& reg : reg_exp) {
+		if (std::regex_match(word, reg)) {
+			return false;
+		}
+	}
+	return true;
 }
