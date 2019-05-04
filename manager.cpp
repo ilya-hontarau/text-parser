@@ -22,17 +22,13 @@ namespace fs = std::filesystem;
 		}
 
 		for (const auto& file_name : file_name_data) {
-			//if (!fs::file_size(file_name)) {
 				Indexer indexer(file_name);
 				indexer.Process();
 				indexer_data.push_back(std::move(indexer));
-			//}
 		}
 	}
 
 	void IndexerManager::PrintConsole() const {
-		//string filename = "data\\" + path_.filename().string()+"_data";
-		//ofstream write(filename, ios::binary);
 		for (const auto& indexer : indexer_data) {
 			indexer.PrintConsole();
 		}
