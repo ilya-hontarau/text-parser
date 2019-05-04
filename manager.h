@@ -1,5 +1,6 @@
 #pragma once
 #include "index.h"
+#include <filesystem>
 class IndexerManager {
 public:
 	IndexerManager(const std::filesystem::path& path) :path_(path) {}

@@ -50,15 +50,17 @@ namespace fs = std::filesystem;
 		}
 	}
 
-	bool IndexerManager::Exist() const
-	{
-		fs::path search_file = "data\\"+path_.filename().string() + "_data";
-		auto it_ = std::vector<fs::path>(fs::begin(std::filesystem::directory_iterator("data")), fs::end(std::filesystem::directory_iterator("data")));
-		auto it = std::find(fs::begin(std::filesystem::directory_iterator("data")), fs::end(std::filesystem::directory_iterator("data")), search_file);
-		if (it == fs::end(std::filesystem::directory_iterator(path_))) {
-			return false;
+	bool IndexerManager::Exist() const {
+		if (fs::exists("data\\")) {
+			fs::path search_file = "data\\" + path_.filename().string() + "_data";
+			auto it_ = std::vector<fs::path>(fs::begin(std::filesystem::directory_iterator("data")), fs::end(std::filesystem::directory_iterator("data")));
+			auto it = std::find(fs::begin(std::filesystem::directory_iterator("data")), fs::end(std::filesystem::directory_iterator("data")), search_file);
+			if (it != fs::end(std::filesystem::directory_iterator(path_))) {
+				return true;
+			}
+			else return false;
 		}
-		else return true;
+		return false;
 	}
 
 	void IndexerManager::Find(const std::string& search_word)  const {
@@ -75,14 +77,16 @@ namespace fs = std::filesystem;
 	}
 
 	void IndexerManager::Read(const fs::path& path) {
-		std::string filename = "data\\" + path_.filename().string() + "_data";
-		std::ifstream in(filename, std::ios::binary);
-		if (!in.is_open()) throw std::invalid_argument("");
-		in.ignore();
-		while (!in.eof()) {
-			Indexer indexer(filename);
-			indexer.Read(in);
-			indexer_data.push_back(std::move(indexer));
+		if (fs::exists("data\\")) {
+			std::string filename = "data\\" + path_.filename().string() + "_data";
+			std::ifstream in(filename, std::ios::binary);
+			if (!in.is_open()) throw std::invalid_argument("");
+			in.ignore();
+			while (!in.eof()) {
+				Indexer indexer(filename);
+				indexer.Read(in);
+				indexer_data.push_back(std::move(indexer));
 
+			}
 		}
 	}
