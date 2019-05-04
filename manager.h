@@ -15,6 +15,8 @@ public:
 
 	void WriteFile();
 
+	bool Exist()const;
+
 	void Find(const std::string& search_word) const ;
 
 	void Read(const std::filesystem::path& path);

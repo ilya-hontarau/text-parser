@@ -52,25 +52,27 @@ Indexer::Indexer(const std::filesystem::path& path) :path_(path) {
 }
 
 void Indexer::Process() {
-	std::ifstream in(path_);
-	if (!in.is_open()) {
-		throw std::invalid_argument("wrong file");
-	}
-	std::string sentence;
-	size_t sent_counter = 0, offset_counter = 0;
-	while (!in.eof()) {
-		std::string word;
-		in >> word;
-		sentence += word + " ";
-		ProcessWord(Edit(word), { sent_counter, offset_counter });
-		offset_counter = sentence.size();
-		if (*prev(word.end()) == '.' || *prev(word.end()) == '!' || *prev(word.end()) == '?') {
-			sentences.push_back(sentence.substr(0, sentence.size() - 1));
-			sentence.clear();
-			++sent_counter;
-			offset_counter = 0;
+	if (!std::filesystem::is_directory(path_)) {
+		std::ifstream in(path_);
+		if (!in.is_open()) {
+			throw std::invalid_argument("wrong file");
 		}
+		std::string sentence;
+		size_t sent_counter = 0, offset_counter = 0;
+		while (!in.eof()) {
+			std::string word;
+			in >> word;
+			sentence += word + " ";
+			ProcessWord(Edit(word), { sent_counter, offset_counter });
+			offset_counter = sentence.size();
+			if (*prev(word.end()) == '.' || *prev(word.end()) == '!' || *prev(word.end()) == '?') {
+				sentences.push_back(sentence.substr(0, sentence.size() - 1));
+				sentence.clear();
+				++sent_counter;
+				offset_counter = 0;
+			}
 
+		}
 	}
 }
 
@@ -206,8 +208,9 @@ std::ostream& operator<<(std::ostream & out, const std::vector<Indexer::Options>
 
 
 std::string Indexer::Edit(const std::string & str) {
-	if (IsPunct(*prev(str.end()))) {
-		return str.substr(0, str.size() - 1);
-	}
+	if (str.size() == 0) throw std::invalid_argument("incorrect file");
+		if (IsPunct(*prev(str.end()))) {
+			return str.substr(0, str.size() - 1);
+		}
 	return str;
 }

@@ -1,5 +1,6 @@
 #include "manager.h"
 #include <iostream>
+#include <algorithm>
 namespace fs = std::filesystem;
 
 	void IndexerManager::Process(Recursive rec) {
@@ -21,9 +22,11 @@ namespace fs = std::filesystem;
 		}
 
 		for (const auto& file_name : file_name_data) {
-			Indexer indexer(file_name);
-			indexer.Process();
-			indexer_data.push_back(std::move(indexer));
+			//if (!fs::file_size(file_name)) {
+				Indexer indexer(file_name);
+				indexer.Process();
+				indexer_data.push_back(std::move(indexer));
+			//}
 		}
 	}
 
@@ -47,6 +50,17 @@ namespace fs = std::filesystem;
 		}
 	}
 
+	bool IndexerManager::Exist() const
+	{
+		fs::path search_file = "data\\"+path_.filename().string() + "_data";
+		auto it_ = std::vector<fs::path>(fs::begin(std::filesystem::directory_iterator("data")), fs::end(std::filesystem::directory_iterator("data")));
+		auto it = std::find(fs::begin(std::filesystem::directory_iterator("data")), fs::end(std::filesystem::directory_iterator("data")), search_file);
+		if (it == fs::end(std::filesystem::directory_iterator(path_))) {
+			return false;
+		}
+		else return true;
+	}
+
 	void IndexerManager::Find(const std::string& search_word)  const {
 		std::cout << "-\t\"" << search_word << "\":" << std::endl;
 		for (const auto& indexer : indexer_data) {
@@ -54,7 +68,7 @@ namespace fs = std::filesystem;
 			if (indexers_.has_value()) {
 				std::cout << "\t\to " << "File \"" << indexer.GetFileName() << "\"" << std::endl;
 				for (const auto& element : indexers_.value()) {
-					std::cout << "\t\t\t* (Sent#" << element.sent_number << ", offste=" << element.offset_number << ")" << std::endl;
+					std::cout << "\t\t\t* (Sent#" << element.sent_number << ", offset=" << element.offset_number << ")" << std::endl;
 				}
 			}
 		}
