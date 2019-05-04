@@ -36,6 +36,9 @@ namespace fs = std::filesystem;
 	}
 
 	void IndexerManager::WriteFile() {
+		if (!fs::exists("data\\")) {
+			fs::create_directory("data\\");
+		}
 		std::string filename = "data\\" + path_.filename().string() + "_data";
 		std::ofstream write(filename, std::ios::binary);
 		for (const auto& indexer : indexer_data) {
