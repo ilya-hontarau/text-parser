@@ -59,6 +59,7 @@ o	File “Example.txt”
 ▪	(Sent#0, offset = 0) 
 
 Запрос “the”: 
+
 o	File “Example.txt” 
 ▪	(Sent#0, offset = 9) 
 ▪	(Sent#1, offset = 0) 
