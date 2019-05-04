@@ -10,12 +10,12 @@ run programm exe with this flags
 	-r -recursive searching(none recursiving is setting by default)
 	NOTE: programm asks for printing information indexing folder
 	
-2) search word in indexing folder
+2)search word in indexing folder
 
 	[folder_path] -s
 	NOTE: you should index file before searching
 	
-3) index and search 
+3)index and search 
 
 	-i [folder_path] -s "word" [-r]
 	-r - recursive searching(none recursiving is setting by default)
@@ -61,5 +61,6 @@ o	File “Example.txt”
 Запрос “the”: 
 
 o	File “Example.txt” 
-▪	(Sent#0, offset = 9) 
-▪	(Sent#1, offset = 0) 
+
+	▪	(Sent#0, offset = 9) 
+	▪	(Sent#1, offset = 0) 
