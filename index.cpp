@@ -2,14 +2,14 @@
 #include <iostream>
 
 bool IsUpper(char ch) {
-	if ((ch >= 'À' && ch <= 'ß') || (ch >= 'A' && ch <= 'Z')) {
+	if ((ch >= 'Ã€' && ch <= 'ÃŸ') || (ch >= 'A' && ch <= 'Z')) {
 		return true;
 	}
 	return false;
 }
 
 bool IsAlpha(char ch) {
-	if ((ch >= 'À' && ch <= 'ÿ') || (ch >= 'A' && ch <= 'z')) {
+	if ((ch >= 'Ã€' && ch <= 'Ã¿') || (ch >= 'A' && ch <= 'z')) {
 		return true;
 	}
 	return false;
@@ -27,29 +27,7 @@ bool IsPunct(wchar_t symbol) {
 }
 
 
-Indexer::Indexer(const std::filesystem::path& path) :path_(path) {
-	//std::ifstream in(path);
-	//if (!in.is_open()) {
-	//	throw std::invalid_argument("wrong file");
-	//}
-	//std::string sentence;
-	//size_t sent_counter = 0, offset_counter = 0;
-	//while (!in.eof()) {
-	//	std::string word;
-	//	in >> word;
-	//	sentence += word + " ";
-	//	ProcessWord(Edit(word), { sent_counter, offset_counter });
-	//	offset_counter = sentence.size();
-	//	if (*prev(word.end()) == '.' || *prev(word.end()) == '!' || *prev(word.end()) == '?') {
-	//		sentences.push_back(sentence.substr(0, sentence.size() - 1));
-	//		sentence.clear();
-	//		++sent_counter;
-	//		offset_counter = 0;
-	//	}
-
-	//}
-
-}
+Indexer::Indexer(const std::filesystem::path& path) :path_(path) {}
 
 void Indexer::Process() {
 	if (!std::filesystem::is_directory(path_)) {
