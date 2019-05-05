@@ -29,7 +29,7 @@ void Solution(int argc, char* argv[]) {
 			exe.Process();
 		}
 	}
-	catch (const std::exception ex) {
+	catch (const std::exception& ex) {
 	  std::cout << ex.what() << std::endl;
 	}
 }
