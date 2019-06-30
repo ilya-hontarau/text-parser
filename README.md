@@ -1,4 +1,4 @@
-# solution-of-a-testing-problem
+# test parser
 Для компиляции необходим компилятор  с поддержкой C++17 и с флагом компиляции /std:c++17.
 
 how to run:
